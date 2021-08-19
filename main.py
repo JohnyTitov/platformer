@@ -5,8 +5,30 @@ if __name__ == '__main__':
     win = pygame.display.set_mode((500, 500))
     pygame.display.set_caption("Dante's hell")
 
-    playerStand = pygame.image.load('Run1.png')
+    playerStand = pygame.image.load('sprite/right/right_1.png')
     background = pygame.image.load('background.png')
+
+    walkRight = [pygame.image.load('sprite/right/right_1.png'),
+                 pygame.image.load('sprite/right/right_2.png'),
+                 pygame.image.load('sprite/right/right_3.png'),
+                 pygame.image.load('sprite/right/right_4.png'),
+                 pygame.image.load('sprite/right/right_5.png'),
+                 pygame.image.load('sprite/right/right_6.png'),
+                 pygame.image.load('sprite/right/right_7.png'),
+                 pygame.image.load('sprite/right/right_8.png'),
+                 ]
+
+    walkLeft = [pygame.image.load('sprite/left/left_1.png'),
+                pygame.image.load('sprite/left/left_2.png'),
+                pygame.image.load('sprite/left/left_3.png'),
+                pygame.image.load('sprite/left/left_4.png'),
+                pygame.image.load('sprite/left/left_5.png'),
+                pygame.image.load('sprite/left/left_6.png'),
+                pygame.image.load('sprite/left/left_7.png'),
+                pygame.image.load('sprite/left/left_8.png'),
+                ]
+
+    clock = pygame.time.Clock()
 
     width = 40
     height = 60
@@ -24,23 +46,48 @@ if __name__ == '__main__':
     run = True
 
     def draw_window():
-        #global animCount
-        win.blit(background, (0,0))
-        pygame.draw.rect(win, (0, 0, 255), (x, y, width, height))
+        global animCount
+
+        win.blit(background, (0, 0))
+
+        if animCount+1 >= 30:
+            animCount = 0
+
+        if left:
+            win.blit(walkLeft[animCount // 5], (x, y))
+            animCount += 1
+        elif right:
+            win.blit(walkRight[animCount // 5], (x, y))
+            animCount += 1
+        else:
+            win.blit(playerStand, (x, y))
+
         pygame.display.update()
 
     while run:
-        pygame.time.delay(50)
+        clock.tick(30)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT] and x > 5:
-            x -= speed
+
         if keys[pygame.K_RIGHT] and x < 495 - width:
             x += speed
+            left = False
+            right = True
+
+        elif keys[pygame.K_LEFT] and x > 5:
+            x -= speed
+            left = True
+            right = False
+
+        else:
+            left = False
+            right = False
+            animCount = 0
+
         if not isJump:
             if keys[pygame.K_SPACE] or keys[pygame.K_UP]:
                 isJump = True
@@ -56,6 +103,4 @@ if __name__ == '__main__':
                 jumpCount = 10
         draw_window()
 
-
     pygame.quit()
-
