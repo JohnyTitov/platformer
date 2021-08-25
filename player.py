@@ -6,8 +6,8 @@ from sprite_player import SpritePlayer
 class Player:
 
     def __init__(self):
-        self.width = 40
-        self.height = 60
+        self.width = 65 #40
+        self.height = 96 #60
         self.x = 50
         self.y = 485 - self.height
         self.speed = 10
@@ -29,6 +29,7 @@ class Player:
 
     def stand(self):
         self._jump()
+        self.sprite.stand()
 
     def jump(self):
         if not self.isJump:
