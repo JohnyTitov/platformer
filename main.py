@@ -1,4 +1,3 @@
-import pygame
 from types import SimpleNamespace
 
 from window import Window

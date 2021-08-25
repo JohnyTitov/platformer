@@ -1,35 +1,44 @@
 from types import SimpleNamespace
 
 from sprite_player import SpritePlayer
+from side import Side
 
 
 class Player:
 
     def __init__(self):
-        self.width = 65 #40
-        self.height = 96 #60
+        self.width = 65
+        self.height = 96
         self.x = 50
         self.y = 485 - self.height
         self.speed = 10
         self.isJump = False
         self.jumpCount = 10
-        self.sprite = SpritePlayer()
+        self.sprite = SpritePlayer()        # визуальное представление игрока
+        self.side = Side()                  # активная сторона
 
     def left(self):
-        if self.x > 5:
-            self.x -= self.speed
-            self._jump()
-            self.sprite.left()
+        self.side.go_left()
 
     def right(self):
-        if self.x < 495 - self.width:
-            self.x += self.speed
-            self._jump()
-            self.sprite.right()
+        self.side.go_right()
+
+    def run(self):
+        if self.side.is_right():
+            if self.x < 495 - self.width:
+                self.x += self.speed
+                self._jump()
+                self.sprite.run(self.side, self.isJump)
+
+        elif self.side.is_left():
+            if self.x > 5:
+                self.x -= self.speed
+                self._jump()
+                self.sprite.run(self.side, self.isJump)
 
     def stand(self):
         self._jump()
-        self.sprite.stand()
+        self.sprite.stand(self.side, self.isJump)
 
     def jump(self):
         if not self.isJump:

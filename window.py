@@ -2,15 +2,14 @@ import pygame
 
 
 class Window:
-
     def __init__(self, setting):
         pygame.init()
         pygame.display.set_caption(setting.name)                    # заголовок с названием
         self.win = pygame.display.set_mode(setting.resolution)      # окно
         self.fps = setting.fps                                      # частота кадров
 
-        self.clock = pygame.time.Clock()
-        self.background = pygame.image.load('background.png')
+        self.clock = pygame.time.Clock()                            # таймер
+        self.background = pygame.image.load('background.png')       # фон
 
     # Обновление окна
     def refresh(self, player):
@@ -30,9 +29,11 @@ class Window:
 
         elif keys[pygame.K_RIGHT]:
             player.right()
+            player.run()
 
         elif keys[pygame.K_LEFT]:
             player.left()
+            player.run()
 
         else:
             player.stand()
