@@ -38,7 +38,7 @@ class SpritePlayer:
         # получить счётчик для текущего набора спрайтов
         this_count = self.count[name]
 
-        if this_count < len(this_sprites) - 1:
+        if this_count < len(this_sprites):
             self.count.update({name: 1})
             self.buf_img = this_sprites[this_count]
         else:
