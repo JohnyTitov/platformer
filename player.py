@@ -27,14 +27,14 @@ class Player:
         if self.side.is_right():
             if self.x < 495 - self.width:
                 self.x += self.speed
-                self._jump()
-                self.sprite.run(self.side, self.isJump)
+            self._jump()
+            self.sprite.run(self.side, self.isJump)
 
         elif self.side.is_left():
             if self.x > 5:
                 self.x -= self.speed
-                self._jump()
-                self.sprite.run(self.side, self.isJump)
+            self._jump()
+            self.sprite.run(self.side, self.isJump)
 
     def stand(self):
         self._jump()
